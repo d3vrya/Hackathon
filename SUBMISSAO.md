@@ -14,7 +14,7 @@ O resultado leva a segurança da tripulação, prioridade nº 1 da NASA, para de
 <!-- PREENCHER: link público para o vídeo de até 30 s (YouTube/Drive) ou para a apresentação de 7 slides -->
 
 ## Link para o projeto final
-<!-- PREENCHER: link público, por exemplo GitHub Pages do repositório -->
+https://d3vrya.github.io/Hackathon/ (código-fonte: https://github.com/d3vrya/Hackathon)
 
 ## Descrição detalhada
 
