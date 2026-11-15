@@ -11,7 +11,7 @@ Ferramentas como o Mars Trek mostram Marte em escala global e regional. O astron
 O resultado leva a segurança da tripulação, prioridade nº 1 da NASA, para dentro do mapa que o astronauta usa em campo.
 
 ## Link para a demonstração
-<!-- PREENCHER: link público para o vídeo de até 30 s (YouTube/Drive) ou para a apresentação de 7 slides -->
+https://d3vrya.github.io/Hackathon/slides/ (7 slides; PDF: https://d3vrya.github.io/Hackathon/slides/ARES-GALE-demo.pdf)
 
 ## Link para o projeto final
 https://d3vrya.github.io/Hackathon/ (código-fonte: https://github.com/d3vrya/Hackathon)

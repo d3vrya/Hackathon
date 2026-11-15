@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARES · GALE · Demo</title>
+<style>
+  :root {
+    --bg: #0d1014; --panel: #161b22; --line: #2a313b; --text: #e8ecf1; --muted: #9aa5b1;
+    --accent: #ff7a3d; --ok: #3ccf7a; --warn: #f2c14e; --danger: #ef4f5f; --blue: #4ea1ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #050607; color: var(--text); font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
+  .deck { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 24px 0; }
+  .slide {
+    position: relative; width: 1600px; height: 900px; overflow: hidden; background: var(--bg);
+    transform-origin: top left; flex: none;
+  }
+  .wrap { position: relative; }
+  /* marca d'água */
+  .wm {
+    position: absolute; top: 26px; right: 34px; z-index: 50;
+    font-weight: 800; letter-spacing: .32em; font-size: 22px; color: rgba(255,255,255,.42);
+    text-shadow: 0 1px 6px rgba(0,0,0,.6); pointer-events: none;
+  }
+  .wm::before { content: "◉ "; color: rgba(255,122,61,.75); letter-spacing: 0; }
+  .num { position: absolute; bottom: 24px; right: 34px; font-size: 16px; color: var(--muted); z-index: 50; }
+  .pad { padding: 70px 80px; height: 100%; display: flex; flex-direction: column; }
+  .kicker { color: var(--accent); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: 20px; }
+  h1 { font-size: 112px; line-height: 1; letter-spacing: .02em; }
+  h2 { font-size: 54px; line-height: 1.1; margin: 10px 0 28px; max-width: 1250px; }
+  p, li { font-size: 26px; line-height: 1.45; color: #cfd6de; }
+  b { color: var(--text); }
+  ul { list-style: none; display: grid; gap: 14px; }
+  li::before { content: "▸ "; color: var(--accent); }
+  .shot { border-radius: 14px; border: 1px solid var(--line); box-shadow: 0 20px 60px rgba(0,0,0,.55); display: block; }
+  .row { display: flex; gap: 48px; align-items: flex-start; flex: 1; }
+  .col { flex: 1; min-width: 0; }
+  .big { font-size: 58px; font-weight: 800; line-height: 1; white-space: nowrap; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px; }
+  .stat small { display: block; color: var(--muted); font-size: 19px; margin-top: 8px; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 26px; }
+  .ok { color: var(--ok); } .danger { color: var(--danger); } .warn { color: var(--warn); } .acc { color: var(--accent); } .blue { color: var(--blue); }
+  .chips { display: flex; flex-wrap: wrap; gap: 12px; }
+  .chip { background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 10px 20px; font-size: 21px; color: #cfd6de; }
+  .chip b { color: var(--accent); margin-right: 8px; }
+
+  /* 1 · título */
+  .s1 { background: #000; }
+  .s1 .bg { position: absolute; inset: 0; background: url(../assets/photos/4199_1.jpg) center 40%/cover; opacity: .7; }
+  .s1 .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,6,7,.95) 0%, rgba(5,6,7,0) 30%), linear-gradient(90deg, rgba(5,6,7,.96) 0%, rgba(5,6,7,.75) 55%, rgba(5,6,7,.2) 100%); }
+  .s1 .pad { position: relative; justify-content: center; }
+  .s1 .lead { font-size: 34px; max-width: 900px; margin-top: 28px; color: #dde3ea; }
+  .s1 .meta { margin-top: 48px; font-size: 22px; color: var(--muted); }
+  .s1 .meta b { color: var(--accent); }
+
+  /* 7 · fechamento */
+  .s7 .bg { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,122,61,.14), rgba(78,161,255,.06) 60%, transparent); }
+  .s7 .pad { position: relative; }
+  .link { font-family: "Cascadia Mono", Consolas, monospace; font-size: 30px; color: var(--blue); }
+
+  /* tela pequena: escala o slide para caber */
+  @media print {
+    @page { size: 1600px 900px; margin: 0; }
+    html, body { background: var(--bg); }
+    .deck { display: block; padding: 0; gap: 0; }
+    .wrap { width: auto !important; height: auto !important; }
+    .slide { transform: none !important; page-break-after: always; break-after: page; }
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 · Título -->
+  <div class="wrap"><section class="slide s1">
+    <div class="bg"></div><div class="shade"></div>
+    <div class="wm">DEVYRA</div>
+    <div class="pad">
+      <div class="kicker">NASA Space Apps 2026 · Guia de Sobrevivência Interplanetária: Mapa de Marte</div>
+      <h1 style="margin-top:26px">ARES · GALE</h1>
+      <p class="lead">O mapa de campo para os primeiros humanos em Marte: planejar e executar caminhadas (EVAs) seguras no Monte Sharp, num tablet e no visor do capacete.</p>
+      <p class="meta"><b>App ao vivo:</b> d3vrya.github.io/Hackathon</p>
+    </div>
+    <div class="num">1 / 7</div>
+  </section></div>
+
+  <!-- 2 · Introdução -->
+  <div class="wrap"><section class="slide">
+    <div class="wm">DEVYRA</div>
+    <div class="pad">
+      <div class="kicker">O problema</div>
+      <h2>Mapas de Marte mostram o planeta. O astronauta precisa dos próximos 100 metros.</h2>
+      <div class="row">
+        <div class="col">
+          <ul>
+            <li>Onde a encosta passa do limite do traje?</li>
+            <li>Quanto tempo até o abrigo se vier um evento solar?</li>
+            <li>Quanto resta de traje e de luz do dia?</li>
+            <li>O que vou encontrar em cada parada?</li>
+          </ul>
+          <p style="margin-top:34px"><b>Local:</b> cratera Gale, exatamente por onde o Curiosity passou em 2024–2025: o <b>enxofre elementar</b> e as cristas de <b>boxwork</b>.</p>
+        </div>
+        <div class="col">
+          <p style="margin-bottom:18px;color:var(--muted)">Dados de várias missões da NASA numa só tela:</p>
+          <div class="chips">
+            <span class="chip"><b>Óptico</b>HiRISE 25 cm · CTX · Viking</span>
+            <span class="chip"><b>Relevo</b>DEM HiRISE 1 m · MOLA/HRSC</span>
+            <span class="chip"><b>Térmico</b>THEMIS IR noturno</span>
+            <span class="chip"><b>Radiação</b>Curiosity RAD</span>
+            <span class="chip"><b>Clima</b>Curiosity REMS</span>
+            <span class="chip"><b>Superfície</b>Navcam · 1.389 pontos</span>
+            <span class="chip"><b>Trajeto</b>NASA/JPL MMGIS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="num">2 / 7</div>
+  </section></div>
+
+  <!-- 3 · Rota segura -->
+  <div class="wrap"><section class="slide">
+    <div class="wm">DEVYRA</div>
+    <div class="pad">
+      <div class="kicker">Rota segura automática (A*)</div>
+      <h2>O app calcula o caminho mais rápido que nunca passa do limite de inclinação.</h2>
+      <div class="row">
+        <img class="shot" src="img/safe.jpg" alt="Rota segura sobre o mapa de inclinação" style="width:900px">
+        <div class="col">
+          <p>Sobre o <b>DEM HiRISE de 1 m</b> de Gale (grade de 4 m), com a velocidade de caminhada com traje (Tobler).</p>
+          <div class="stats">
+            <div class="stat"><div class="big danger">218 m</div><small>acima de 15° na trilha do rover</small></div>
+            <div class="stat"><div class="big ok">0 m</div><small>acima de 15° na rota segura</small></div>
+            <div class="stat"><div class="big">0,30 m</div><small>erro do DEM × elevação medida pelo rover</small></div>
+            <div class="stat"><div class="big">9,2°</div><small>inclinação do DEM = inclinação do rover</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="num">3 / 7</div>
+  </section></div>
+
+  <!-- 4 · Segurança -->
+  <div class="wrap"><section class="slide">
+    <div class="wm">DEVYRA</div>
+    <div class="pad">
+      <div class="kicker">Segurança ao vivo</div>
+      <h2>Linha do tempo da EVA com radiação, abrigo, traje e luz.</h2>
+      <div class="row">
+        <div class="col">
+          <ul>
+            <li><b class="danger">Evento solar:</b> simula os 8,1 mGy que o RAD mediu em 20/mai/2024 e manda voltar ao rover, com distância e tempo.</li>
+            <li><b class="blue">Raio de abrigo:</b> onde dá para chegar ao rover pressurizado em 15 min.</li>
+            <li><b class="warn">Alertas:</b> trecho íngreme à frente, reserva do traje, pôr do sol.</li>
+            <li><b>Perfil de elevação</b> colorido por inclinação.</li>
+          </ul>
+        </div>
+        <img class="shot" src="img/sep.jpg" alt="Alerta de evento solar na EVA-2" style="width:900px">
+      </div>
+    </div>
+    <div class="num">4 / 7</div>
+  </section></div>
+
+  <!-- 5 · Navegação -->
+  <div class="wrap"><section class="slide">
+    <div class="wm">DEVYRA</div>
+    <div class="pad">
+      <div class="kicker">Navegação como um app de mapas</div>
+      <h2>Busca, rotas A→B, passo a passo e um “Street View” de Marte.</h2>
+      <div class="row" style="gap:32px">
+        <div class="col">
+          <img class="shot" src="img/dir.jpg" alt="Rotas alternativas" style="width:100%">
+          <p style="margin-top:18px;font-size:23px">3 rotas a pé: <b>mais segura</b> (≤ 12°), <b>recomendada</b> (≤ 15°) e <b>mais rápida</b> (≤ 20°). Busca por 1.783 nomes da IAU, sol ou coordenadas.</p>
+        </div>
+        <div class="col">
+          <img class="shot" src="img/sv.jpg" alt="Street View com foto Navcam" style="width:100%">
+          <p style="margin-top:18px;font-size:23px">Fotos reais da Navcam do Curiosity em qualquer um dos <b>1.389 pontos</b> do trajeto (2012–2026).</p>
+        </div>
+      </div>
+    </div>
+    <div class="num">5 / 7</div>
+  </section></div>
+
+  <!-- 6 · HUD -->
+  <div class="wrap"><section class="slide">
+    <div class="wm">DEVYRA</div>
+    <div class="pad">
+      <div class="kicker">Modo HUD do capacete</div>
+      <h2>Na caminhada, só o essencial no visor.</h2>
+      <div class="row">
+        <img class="shot" src="img/hud.jpg" alt="HUD do capacete" style="width:960px">
+        <div class="col">
+          <ul>
+            <li>Bússola e seta de rumo</li>
+            <li>Próxima manobra e distância</li>
+            <li>Traje, dose, temperatura e inclinação</li>
+            <li>Alertas e minimapa</li>
+            <li>Fundo com a foto real do destino</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="num">6 / 7</div>
+  </section></div>
+
+  <!-- 7 · Impacto -->
+  <div class="wrap"><section class="slide s7">
+    <div class="bg"></div>
+    <div class="wm">DEVYRA</div>
+    <div class="pad">
+      <div class="kicker">Impacto</div>
+      <h2>Os dados que a NASA já tem permitem planejar hoje caminhadas humanas seguras em Marte.</h2>
+      <ul>
+        <li>Mesma abordagem para qualquer local com DEM HiRISE, incluindo as Zonas de Exploração humana.</li>
+        <li>Roda no navegador, sem instalação: tablet, celular e HUD.</li>
+        <li>Código aberto, dados públicos, cálculos verificáveis.</li>
+      </ul>
+      <div class="stats" style="grid-template-columns:repeat(4,1fr);margin-top:44px">
+        <div class="stat"><div class="big acc">2</div><small>EVAs planejadas sobre o trajeto real</small></div>
+        <div class="stat"><div class="big">7</div><small>tipos de dados da NASA</small></div>
+        <div class="stat"><div class="big">1.389</div><small>pontos com foto de superfície</small></div>
+        <div class="stat"><div class="big ok">0 m</div><small>de rota acima do limite</small></div>
+      </div>
+      <div style="margin-top:auto;display:grid;gap:12px">
+        <div class="link">▸ d3vrya.github.io/Hackathon</div>
+        <div class="link">▸ github.com/d3vrya/Hackathon</div>
+      </div>
+    </div>
+    <div class="num">7 / 7</div>
+  </section></div>
+
+</div>
+<script>
+  // Escala cada slide de 1600×900 para caber na largura da tela.
+  function fit() {
+    if (matchMedia('print').matches) return;
+    var w = Math.min(window.innerWidth - 32, 1600), k = w / 1600;
+    document.querySelectorAll('.wrap').forEach(function (el) {
+      el.style.width = w + 'px'; el.style.height = (900 * k) + 'px';
+      el.firstElementChild.style.transform = 'scale(' + k + ')';
+    });
+  }
+  addEventListener('resize', fit); fit();
+</script>
+</body>
+</html>
